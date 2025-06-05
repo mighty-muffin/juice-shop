@@ -56,7 +56,7 @@ jobs:
       - secret
       - sca
       - sast
-    name: Placeholder - Software Composition Analysis
+    name: Placeholder - Unit & Integrations Tests
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
