@@ -5,7 +5,7 @@ name: CI - Master
 on: # yamllint disable-line rule:truthy
   push:
     branches:
-      - Master
+      - master
     paths-ignore:
       - 'README.md'
     tags:
