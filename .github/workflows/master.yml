@@ -1,0 +1,33 @@
+---
+name: CI - Master
+
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - Master
+    paths-ignore:
+      - 'README.md'
+    tags:
+      - v*
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+
+  docker-build-push:
+    name: Call Docker Build
+    uses: irishlab-io/.github/.github/workflows/reusable-docker-build.yml@main
+
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: write
+
+    with:
+      file: "./Dockerfile"
+      platforms: |
+          linux/amd64
+          linux/arm64
