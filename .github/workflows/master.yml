@@ -41,14 +41,35 @@ jobs:
         shell: bash
 
   sast:
-    needs:
-      - pre-commit
-    name: Call Static Application Security Testing
-    uses: irishlab-io/.github/.github/workflows/reusable-sast.yml@main
-    secrets:
-      authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    name: Sonarqube Scan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Connect Tailscale VPN
+        uses: tailscale/github-action@v3.2.2
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+          tags: "tag:ci"
+          version: "latest"
+          use-cache: "true"
+
+      - name: Run SAST - SonarQube
+        uses: SonarSource/sonarqube-scan-action@v5.2.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Quality gating SAST - SonarQube
+        uses: SonarSource/sonarqube-quality-gate-action@v1.2.0
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   unit-test:
     needs:
