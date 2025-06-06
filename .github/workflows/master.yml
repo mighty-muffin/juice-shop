@@ -41,6 +41,8 @@ jobs:
         shell: bash
 
   sast:
+    needs:
+      - pre-commit
     name: Sonarqube Scan
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -82,11 +84,12 @@ jobs:
 
     steps:
       - name: Run U&IT
-        run: echo Unit & Integrations Tests
+        run: echo Unit and Integrations Tests
         shell: bash
   
   docker-build-push:
     needs:
+      - unit-test
       - pre-commit
     name: Call Docker Build
     uses: irishlab-io/.github/.github/workflows/reusable-docker-build.yml@main
