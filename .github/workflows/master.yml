@@ -45,9 +45,8 @@ jobs:
       - pre-commit
     name: Call Static Application Security Testing
     uses: irishlab-io/.github/.github/workflows/reusable-sast.yml@main
-    with:
-      authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
     secrets:
+      authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
