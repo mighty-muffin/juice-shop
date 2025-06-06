@@ -89,7 +89,7 @@ jobs:
   
   docker-build-push:
     needs:
-      - unit-test
+      - secret
       - pre-commit
     name: Call Docker Build
     uses: irishlab-io/.github/.github/workflows/reusable-docker-build.yml@main
