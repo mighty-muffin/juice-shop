@@ -108,11 +108,11 @@ jobs:
     needs:
       - docker-build
       - unit-test
-    name: Placeholder - Unit & Integrations Tests
+    name: Placeholder - Container Vulnerability Scan
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
-      - name: Run U&IT
-        run: echo Unit and Integrations Tests
+      - name: Run Container Vulnerability Scan
+        run: echo Container Vulnerability Scan
         shell: bash
