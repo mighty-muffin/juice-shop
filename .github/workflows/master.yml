@@ -87,7 +87,7 @@ jobs:
         run: echo Unit and Integrations Tests
         shell: bash
   
-  docker-build-push:
+  docker-build:
     needs:
       - secret
       - pre-commit
@@ -103,3 +103,16 @@ jobs:
       file: "./Dockerfile"
       platforms: |
           linux/amd64
+
+  container-vulnerability:
+    needs:
+      - docker-build
+      - unit-test
+    name: Placeholder - Unit & Integrations Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Run U&IT
+        run: echo Unit and Integrations Tests
+        shell: bash
